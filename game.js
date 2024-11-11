@@ -15,6 +15,8 @@ let milkText;
 let isAnimating = false; // アニメーション中かどうかを管理するフラグ
 let milkPerClick = 1; // クリックあたりの牛乳の量
 let upgradeCost = 10; // アップグレードのコスト
+let autoMilkAmount = 0; // 自動収集の牛乳の量
+let autoUpgradeCost = 50; // 自動収集のアップグレードコスト
 
 function preload() {
     this.load.image('cow', 'assets/cow.png'); // 牛の画像を読み込む
@@ -26,6 +28,7 @@ function create() {
     this.add.image(400, 300, 'meadow'); // 背景を設定
     milkText = this.add.text(20, 20, '', { fontSize: '32px', fill: '#000' }); // 初期表示を空にする
     const upgradeText = this.add.text(20, 60, `アップグレード: ${upgradeCost}L`, { fontSize: '24px', fill: '#000' }); // アップグレードのコスト表示
+    const autoUpgradeText = this.add.text(20, 100, `自動収集アップグレード: ${autoUpgradeCost}L`, { fontSize: '24px', fill: '#000' }); // 自動収集のコスト表示
 
     const cow = this.add.image(400, 300, 'cow').setInteractive();
     cow.setScale(0.75); // 牛の画像を75%のサイズに縮小
@@ -68,7 +71,7 @@ function create() {
     });
 
     // アップグレードボタンを作成
-    const upgradeButton = this.add.text(20, 100, 'アップグレード', { fontSize: '24px', fill: '#f00' })
+    const upgradeButton = this.add.text(20, 140, 'アップグレード', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 } })
         .setInteractive()
         .on('pointerdown', () => {
             if (milkCount >= upgradeCost) {
@@ -78,7 +81,42 @@ function create() {
                 milkText.setText('牛乳: ' + milkCount + 'L'); // 牛乳の量を更新
                 upgradeText.setText(`アップグレード: ${upgradeCost}L`); // アップグレードのコストを更新
             }
+        })
+        .on('pointerover', () => {
+            upgradeButton.setStyle({ fill: '#FFD700' }); // ホバー時の色変更
+        })
+        .on('pointerout', () => {
+            upgradeButton.setStyle({ fill: '#fff' }); // ホバー解除時の色変更
         });
+
+    // 自動収集のアップグレードボタンを作成
+    const autoUpgradeButton = this.add.text(20, 180, '自動収集アップグレード', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 } })
+        .setInteractive()
+        .on('pointerdown', () => {
+            if (milkCount >= autoUpgradeCost) {
+                milkCount -= autoUpgradeCost; // コスト分の牛乳を減らす
+                autoMilkAmount++; // 自動収集の量を増やす
+                autoUpgradeCost = Math.floor(autoUpgradeCost * 1.5); // 次のアップグレードのコストを増加
+                milkText.setText('牛乳: ' + milkCount + 'L'); // 牛乳の量を更新
+                autoUpgradeText.setText(`自動収集アップグレード: ${autoUpgradeCost}L`); // アップグレードのコストを更新
+            }
+        })
+        .on('pointerover', () => {
+            autoUpgradeButton.setStyle({ fill: '#FFD700' }); // ホバー時の色変更
+        })
+        .on('pointerout', () => {
+            autoUpgradeButton.setStyle({ fill: '#fff' }); // ホバー解除時の色変更
+        });
+
+    // 自動収集のタイマーを設定
+    this.time.addEvent({
+        delay: 1000, // 1秒ごとに
+        callback: () => {
+            milkCount += autoMilkAmount; // 自動収集の牛乳を加算
+            milkText.setText('牛乳: ' + milkCount + 'L'); // 牛乳の量を更新
+        },
+        loop: true // 繰り返し実行
+    });
 }
 
 function update() {
