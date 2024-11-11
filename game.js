@@ -35,7 +35,7 @@ function create() {
         
         // 牛乳の画像を牛の左右にランダムに表示
         const direction = Math.random() < 0.5 ? -1 : 1; // 左右の方向を決定
-        const milk = this.add.image(cow.x + (direction * 70), cow.y, 'milk').setOrigin(0.5, 1);
+        const milk = this.add.image(cow.x + (direction * 150), cow.y, 'milk').setOrigin(0.5, 1);
         milk.setScale(0.3); // 牛乳のサイズを小さくする
         milk.setAlpha(1); // 初期の透明度を設定
         milk.rotation = Phaser.Math.DegToRad(direction * 15); // 左右に15度回転させる
