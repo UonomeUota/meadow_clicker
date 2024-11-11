@@ -5,6 +5,19 @@
     <title>牧場クリッカー</title>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
     <script src="game.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* 水平方向に中央揃え */
+            align-items: center; /* 垂直方向に中央揃え */
+            height: 100vh; /* ビューポートの高さを100%に設定 */
+            margin: 0; /* デフォルトのマージンを削除 */
+            background-color: #f0f0f0; /* 背景色を設定（任意） */
+        }
+        #game {
+            border: 2px solid #000; /* ゲームエリアの境界線（任意） */
+        }
+    </style>
 </head>
 <body>
     <div id="game"></div>

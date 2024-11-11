@@ -1,7 +1,7 @@
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     scene: {
         preload: preload,
         create: create,
@@ -25,12 +25,10 @@ function preload() {
 }
 
 function create() {
-    this.add.image(400, 300, 'meadow'); // 背景を設定
-    milkText = this.add.text(20, 20, '', { fontSize: '32px', fill: '#000' }); // 初期表示を空にする
-    const upgradeText = this.add.text(20, 60, `アップグレード: ${upgradeCost}L`, { fontSize: '24px', fill: '#000' }); // アップグレードのコスト表示
-    const autoUpgradeText = this.add.text(20, 100, `自動収集アップグレード: ${autoUpgradeCost}L`, { fontSize: '24px', fill: '#000' }); // 自動収集のコスト表示
+    this.add.image(640, 360, 'meadow'); // 背景を設定
+    milkText = this.add.text(20, 20, '', { fontSize: '48px', fill: '#000' }); // 牛乳の量を大きく表示
 
-    const cow = this.add.image(400, 300, 'cow').setInteractive();
+    const cow = this.add.image(640, 360, 'cow').setInteractive();
     cow.setScale(0.75); // 牛の画像を75%のサイズに縮小
 
     cow.on('pointerdown', () => {
@@ -71,7 +69,7 @@ function create() {
     });
 
     // アップグレードボタンを作成
-    const upgradeButton = this.add.text(20, 140, 'アップグレード', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 } })
+    const upgradeButton = this.add.text(20, 140, '牛を増やす', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 } })
         .setInteractive()
         .on('pointerdown', () => {
             if (milkCount >= upgradeCost) {
@@ -79,7 +77,7 @@ function create() {
                 milkPerClick++; // クリックあたりの牛乳の量を増やす
                 upgradeCost = Math.floor(upgradeCost * 1.5); // 次のアップグレードのコストを増加
                 milkText.setText('牛乳: ' + milkCount + 'L'); // 牛乳の量を更新
-                upgradeText.setText(`アップグレード: ${upgradeCost}L`); // アップグレードのコストを更新
+                upgradeCostText.setText(`${upgradeCost}L`); // アップグレードコストを更新
             }
         })
         .on('pointerover', () => {
@@ -89,8 +87,11 @@ function create() {
             upgradeButton.setStyle({ fill: '#fff' }); // ホバー解除時の色変更
         });
 
+    // アップグレードコストをボタンの右に表示
+    const upgradeCostText = this.add.text(upgradeButton.x + upgradeButton.width + 10, 140, `${upgradeCost}L`, { fontSize: '20px', fill: '#000' });
+
     // 自動収集のアップグレードボタンを作成
-    const autoUpgradeButton = this.add.text(20, 180, '自動収集アップグレード', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 } })
+    const autoUpgradeButton = this.add.text(20, 180, 'バイトを増やす', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 } })
         .setInteractive()
         .on('pointerdown', () => {
             if (milkCount >= autoUpgradeCost) {
@@ -98,7 +99,7 @@ function create() {
                 autoMilkAmount++; // 自動収集の量を増やす
                 autoUpgradeCost = Math.floor(autoUpgradeCost * 1.5); // 次のアップグレードのコストを増加
                 milkText.setText('牛乳: ' + milkCount + 'L'); // 牛乳の量を更新
-                autoUpgradeText.setText(`自動収集アップグレード: ${autoUpgradeCost}L`); // アップグレードのコストを更新
+                autoUpgradeCostText.setText(`${autoUpgradeCost}L`); // 自動収集コストを更新
             }
         })
         .on('pointerover', () => {
@@ -107,6 +108,9 @@ function create() {
         .on('pointerout', () => {
             autoUpgradeButton.setStyle({ fill: '#fff' }); // ホバー解除時の色変更
         });
+
+    // 自動収集のアップグレードコストをボタンの右に表示
+    const autoUpgradeCostText = this.add.text(autoUpgradeButton.x + autoUpgradeButton.width + 10, 180, `${autoUpgradeCost}L`, { fontSize: '20px', fill: '#000' });
 
     // 自動収集のタイマーを設定
     this.time.addEvent({
