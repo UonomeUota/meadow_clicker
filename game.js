@@ -26,7 +26,7 @@ function preload() {
 
 function create() {
     this.add.image(640, 360, 'meadow'); // 背景を設定
-    milkText = this.add.text(20, 20, '', { fontSize: '48px', fill: '#000', fontFamily: 'Patrick Hand' }); // 牛乳の量を大きく表示
+    milkText = this.add.text(20, 20, '', { fontSize: '48px', fill: '#000', fontFamily: 'Yusei Magic' }); // 牛乳の量を大きく表示
 
     const cow = this.add.image(640, 360, 'cow').setInteractive();
     cow.setScale(0.75); // 牛の画像を75%のサイズに縮小
@@ -69,7 +69,7 @@ function create() {
     });
 
     // アップグレードボタンを作成
-    const upgradeButton = this.add.text(20, 140, '牛を増やす', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 }, fontFamily: 'Patrick Hand' })
+    const upgradeButton = this.add.text(20, 140, '牛を増やす', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 }, fontFamily: 'Yusei Magic' })
         .setInteractive()
         .on('pointerdown', () => {
             if (milkCount >= upgradeCost) {
@@ -88,10 +88,10 @@ function create() {
         });
 
     // アップグレードコストをボタンの右に表示
-    const upgradeCostText = this.add.text(upgradeButton.x + upgradeButton.width + 10, 140, `${upgradeCost}L`, { fontSize: '20px', fill: '#000', fontFamily: 'Patrick Hand' });
+    const upgradeCostText = this.add.text(upgradeButton.x + upgradeButton.width + 10, 140, `${upgradeCost}L`, { fontSize: '20px', fill: '#000', fontFamily: 'Yusei Magic' });
 
     // 自動収集のアップグレードボタンを作成
-    const autoUpgradeButton = this.add.text(20, 180, 'バイトを増やす', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 }, fontFamily: 'Patrick Hand' })
+    const autoUpgradeButton = this.add.text(20, 180, 'バイトを増やす', { fontSize: '24px', fill: '#fff', backgroundColor: '#007BFF', padding: { x: 10, y: 5 }, fontFamily: 'Yusei Magic' })
         .setInteractive()
         .on('pointerdown', () => {
             if (milkCount >= autoUpgradeCost) {
@@ -110,7 +110,7 @@ function create() {
         });
 
     // 自動収集のアップグレードコストをボタンの右に表示
-    const autoUpgradeCostText = this.add.text(autoUpgradeButton.x + autoUpgradeButton.width + 10, 180, `${autoUpgradeCost}L`, { fontSize: '20px', fill: '#000', fontFamily: 'Patrick Hand' });
+    const autoUpgradeCostText = this.add.text(autoUpgradeButton.x + autoUpgradeButton.width + 10, 180, `${autoUpgradeCost}L`, { fontSize: '20px', fill: '#000', fontFamily: 'Yusei Magic' });
 
     // 自動収集のタイマーを設定
     this.time.addEvent({
